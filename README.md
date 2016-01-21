@@ -46,8 +46,7 @@ To be updated
 
 ## File Organization
 - lib Directory
-  - seeds.sql
-  - schema.sql
+  - schema.sql with seeds
   - spike.rb
 - Public Directory
   - css Directory
@@ -56,10 +55,10 @@ To be updated
   - js Directory
     - jQuery local file
 - Views Directory
-  - layout.erb
+  - layout.erb X
   - layout_nonuser.erb
-  - login.erb
-  - signup.erb
+  - login.erb X
+  - signup.erb X
   - categories.erb
   - category.erb
   - articles.erb
