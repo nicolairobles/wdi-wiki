@@ -12,3 +12,6 @@
 
 <!-- Categories links -->
 <p><a href=<%= "/articles/#{@id}/edit" %>>Categories</a></p>
+
+<!-- Timestamp -->
+<p>This page was last modified on <%=@time.strftime("%B %d %Y at %I:%M %p")%></p>

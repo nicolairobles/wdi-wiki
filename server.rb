@@ -2,6 +2,7 @@ require "sinatra/base"
 require "pg"
 require "bcrypt"
 require "pry"
+require "date"
 
 module WDIWiki
 	
@@ -26,6 +27,8 @@ module WDIWiki
 				ON users.id = articles.author_ID 
 				WHERE articles.id = #{@id}"
 				).first
+			@time = Date.parse(@article["edit_date"])
+			binding.pry
 			erb :article
 		end
 
@@ -58,7 +61,6 @@ module WDIWiki
 		end
 
 		private
-
 		def database_connection
 			PG.connect(dbname: WDIWiki)
 		end 
