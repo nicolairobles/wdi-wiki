@@ -1,0 +1,16 @@
+<div class="page-header">
+	<!-- Article Title -->
+  <h1><%= "#{@article["title"]}" %></h1>
+  <!-- Form to edit Article Content -->
+	<form class="article_edit" action=<%="/articles/#{@id}/edit"%> method="post">
+		<!-- Editable Article content -->
+		<div class="input-row">
+			<label for="content"></label>
+			<textarea name="content"><%= "#{@article["content"]}" %></textarea>
+		</div>
+		<!-- Submit edits button -->
+		<div class="input-row">
+			<input type="submit" value="Submit Edit">
+		</div>
+	</form>
+</div>

@@ -1,17 +1,14 @@
-<!-- Begin page content -->
 <div class="page-header">
-  <h1><%= "#{@article["title"]}" %> <!-- ruby deliminters  --></h1>
-  <p><a href=<%= "/articles/#{@id}/edit" %>>Edit</a></p>
-  <p>Author: <%= "#{@article["name"]}" %></p>
-
+	<!-- Article Title -->
+  <h1><%= "#{@article["title"]}" %></h1>
+  <!-- Edit Article link -->
+  <p><a href=<%= "/articles/#{@id}/edit" %>>Edit Article</a></p>
+  <!-- Author link -->
+  <p>By: <a href=<%="/user/#{@article["id"]}"%>><%= "#{@article["name"]}" %> </a></p>
 </div>
 
+<!-- Article Content -->
 <p class="lead"><%= "#{@article["content"]}" %></p>
 
-
-<footer class="article-footer">
-  <div class="container">
-    <p><a href=<%= "/articles/#{@id}/edit" %>>Edit</a></p>
-  </div>
-</footer>
-
+<!-- Categories links -->
+<p><a href=<%= "/articles/#{@id}/edit" %>>Categories</a></p>

@@ -62,7 +62,7 @@ To be updated
   - categories.erb
   - category.erb
   - articles.erb
-  - article.erb
+  - article.erb X 
   - article_edit.erb
   - user.erb
   - user_edit.erb

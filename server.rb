@@ -18,14 +18,41 @@ module WDIWiki
 			db = database_connection
 			@id = params[:id]
 			@article = db.exec(
-				"SELECT users.name, users.email, articles.title, articles.content, articles.edit_date, articles.author_ID 
+				"SELECT users.id, users.name, users.email, articles.title, articles.content, articles.edit_date, articles.author_ID 
 				FROM users 
 				JOIN articles 
 				ON users.id = articles.author_ID 
 				WHERE articles.id = #{@id}"
 				).first
-			binding.pry
 			erb :article
+		end
+
+		get "/articles/:id/edit" do
+			db = database_connection
+			@id = params[:id]
+			@article = db.exec(
+				"SELECT users.id, users.name, users.email, articles.title, articles.content, articles.edit_date, articles.author_ID 
+				FROM users 
+				JOIN articles 
+				ON users.id = articles.author_ID 
+				WHERE articles.id = #{@id}"
+				).first
+			erb :article_edit
+		end
+
+		post "/articles/:id/edit" do
+			db = database_connection
+			@id = params[:id]
+			content = params["content"]
+			db.exec_params("UPDATE articles SET content = $1, edit_date = $2 WHERE id = $3", [content, Time.now, @id])
+			@article = db.exec(
+				"SELECT users.id, users.name, users.email, articles.title, articles.content, articles.edit_date, articles.author_ID 
+				FROM users 
+				JOIN articles 
+				ON users.id = articles.author_ID 
+				WHERE articles.id = #{@id}"
+				).first
+			erb :article_edit
 		end
 
 		private
@@ -37,3 +64,11 @@ module WDIWiki
 	end 
 	
 end
+
+
+
+
+
+
+
+
