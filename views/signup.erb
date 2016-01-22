@@ -1,10 +1,19 @@
-<form class="form-signin">
+<!-- Form with post method to /signup -->
+<form class="form-signin" action="/signup" method="post">
   <h2 class="form-signin-heading">Sign up</h2>
+
+<!-- Insert Name name="name" -->
   <label for="inputName" class="sr-only">Name</label>
-  	<input type="name" id="inputName" class="form-control" placeholder="Name" required autofocus>
+  	<input type="name" id="inputName" class="form-control" placeholder="Name" name="name" required autofocus>
+
+<!-- Insert Email name="login_email" -->
   <label for="inputEmail" class="sr-only">Email address</label>
-  	<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+  	<input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="login_email" required autofocus>
+
+<!-- Insert Password name="login_password" -->
   <label for="inputPassword" class="sr-only">Password</label>
-  	<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  	<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="login_password" required>
+
+<!-- Submit Button -->
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
 </form>

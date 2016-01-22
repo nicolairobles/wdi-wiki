@@ -1,0 +1,16 @@
+<div class="page-header">
+	<!-- Category Header -->
+  <h1><%= @title %></h1>
+</div>
+
+<!-- Categories Wrapper 100% width -->
+<div class="categories-wrapper">
+	<% @articles.each do |article| %>
+
+	<div>
+		<a href=<%= "/category/#{article["articles_id"]}"%> ><%= article["article_title"] %>
+		</a>
+	</div>
+
+	<% end %>
+</div>

@@ -1,0 +1,1 @@
+	SELECT articles.id AS article_id, articles.title AS article_title, articles.content AS article_content, categories.id AS category_ID, categories.title AS category_title FROM articles JOIN articles_categories ON articles.id = articles_categories.articles_id JOIN categories   ON categories_id = articles_categories.categories_id WHERE articles_categories.categories_id = 1
