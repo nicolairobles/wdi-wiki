@@ -6,6 +6,8 @@ require "pry"
 module WDIWiki
 	
 	class Server < Sinatra::Base
+		set :method_override, true
+
 		get "/" do
 			redirect "/signup"
 		end
@@ -40,7 +42,7 @@ module WDIWiki
 			erb :article_edit
 		end
 
-		post "/articles/:id/edit" do
+		put "/articles/:id/edit" do
 			db = database_connection
 			@id = params[:id]
 			content = params["content"]
