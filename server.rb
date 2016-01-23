@@ -31,10 +31,10 @@ module WDIWiki
 			db = database_connection
 			name = params[:name]
 			email = params[:login_email]
+			binding.pry
 			encrypted_password = BCrypt::Password.create(params[:login_password])
 			users = db.exec_params("INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id", [name, email, encrypted_password])
 	    session["user_id"] = users.first["id"]
-	    binding.pry
 			erb :login 
 		end
 
@@ -42,31 +42,51 @@ module WDIWiki
 			erb :login
 		end
 
+		# post "/login" do
+		# 	db = database_connection
+		# 	login_email = params[:login_email]
+		# 	login_password = params[:login_password]
+		# 	@user = db.exec_params("SELECT * FROM users WHERE email = $1", [login_email]).first
+		# 	# if @user.length == 0
+		# 	# 	@error = "Invalid Username"
+		# 	# 	erb :login
+		# 	# else
+		# 	binding.pry
+		# 	if @user && login_password == BCrypt::Password.new(@user["login_password_digest"])
+		# 			session["user_id"] = @user["id"]
+		# 			binding.pry
+		# 	end
+
+		# 	login_password = BCrypt::Password.new(@user) # the password already in db
+		# 	login_email = params[:login_email]
+	 # 		users = db.exec_params(<<-SQL, [params[:login_email],login_password]) 
+	 #      SELECT * FROM users WHERE login_name = ;
+	 #    SQL
+	 #    if login_password == users["login_password_digest"]
+		#     session["user_id"] = users.first["id"]
+	 #    	binding.pry
+		# 		erb :login_success
+		# 	else
+	 #  	end
+		# end
+
 		post "/login" do
-			@user = @@db.exec_params("SELECT * FROM users WHERE login_name = $1", [params[login_name]])
-			# if @user.length == 0
-			# 	@error = "Invalid Username"
-			# 	erb :login
-			# else
-			if @user && params[:login_password] == BCrypt::Password.new(@user["login_password_digest"])
-					session["user_id"] = @user["id"]
-			end
-
-			login_password = BCrypt::Password.new(@user) # the password already in db
-			login_name = params[:login_name]
-	 		users = @@db.exec_params(<<-SQL, [params[:login_name],login_password]) 
-	      SELECT * FROM users WHERE login_name = ;
-	    SQL
-	    if login_password == users["login_password_digest"]
-		    session["user_id"] = users.first["id"]
-	    	binding.pry
-				erb :login_success
-			else
-	  	end
-		end
-
-
-
+			db = database_connection
+	    @user = db.exec_params("SELECT * FROM users WHERE email = $1", [params[:login_email]]).first
+	    if @user
+	    		binding.pry
+	      if BCrypt::Password.new(@user["password"]) == params[:login_password]
+	        session["user_id"] = @user["id"]
+	        redirect "/categories"
+	      else
+	        @error = "Invalid Password"
+	        erb :login
+	      end
+	    else
+	      @error = "Invalid Username"
+	      erb :login
+	    end
+  	end
 
 		get "/articles/:id" do
 			db = database_connection
@@ -137,11 +157,3 @@ module WDIWiki
 	end 
 	
 end
-
-
-
-
-
-
-
-

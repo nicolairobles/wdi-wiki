@@ -59,12 +59,12 @@ To be updated
   - layout_nonuser.erb
   - login.erb X
   - signup.erb X
-  - categories.erb
-  - category.erb
-  - articles.erb
+  - categories.erb X
+  - category.erb X
+  - articles.erb X
   - article.erb X 
-  - article_edit.erb
-  - user.erb
+  - article_edit.erb X
+  - user.erb 
   - user_edit.erb
   - user_articles.erb
 - config.ru
