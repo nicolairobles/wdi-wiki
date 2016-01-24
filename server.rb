@@ -148,15 +148,19 @@ module WDIWiki
 		end
 
 		get "/user/:id" do
-			binding.pry
 			if current_user["id"]
-				binding.pry
 				db = database_connection
 				@id = params[:id]
-				@user_profile = db.exec(
-					"SELECT * FROM users WHERE id = #{@id}"
-					)
-				binding.pry
+				@profile = db.exec(
+					"SELECT * 
+					FROM users 
+					WHERE id = #{@id}"
+					).first
+				@user_articles = db.exec(
+					"SELECT * 
+					FROM articles 
+					WHERE author_id = #{@id}"
+					).to_a
 				erb :user
 			else
     		redirect "/login"
