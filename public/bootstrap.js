@@ -1929,6 +1929,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
+
+
 +function ($) {
   'use strict';
 
@@ -2364,3 +2366,10 @@ if (typeof jQuery === 'undefined') {
   })
 
 }(jQuery);
+
+// Log Out Link Functionality
+function getsupport ( selectedtype )
+{
+  document.supportform._method.value = selectedtype ;
+  document.supportform.submit() ;
+}
