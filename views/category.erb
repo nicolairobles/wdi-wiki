@@ -5,12 +5,10 @@
 
 <!-- Categories Wrapper 100% width -->
 <div class="categories-wrapper">
-	<% @articles.each do |article| %>
-
-	<div>
-		<a href=<%="/articles/#{article["article_id"]}"%> ><%= article["article_title"] %>
-		</a>
-	</div>
-
-	<% end %>
+	<div class="list-group">
+		<% @articles.each do |article| %>
+		  <a href=<%="/articles/#{article["article_id"]}"%> class="list-group-item"><%= article["article_title"] %></a>
+		<% end %>
+			<a href=<%="/articles_new"%> class="list-group-item">+ Add New Article</a>
+		</div>
 </div>

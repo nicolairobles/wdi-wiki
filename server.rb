@@ -2,8 +2,7 @@ require "sinatra/base"
 require "pg"
 require "bcrypt"
 require "pry"
-require "date"
-require "time"
+require "redcarpet"
 
 module WDIWiki
 	
@@ -95,6 +94,7 @@ module WDIWiki
 
 		get "/articles/:id" do
 			if current_user["id"]
+				markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
 				db = database_connection
 				@id = params[:id]
 				@article = db.exec(
@@ -104,7 +104,18 @@ module WDIWiki
 					ON users.id = articles.author_ID 
 					WHERE articles.id = #{@id}"
 					).first
+				@content = markdown(@article["content"]) 
 				@time = DateTime.parse(@article["edit_date"])
+				@categories = db.exec(
+					"SELECT title, id 
+					FROM categories 
+					JOIN articles_categories 
+					ON categories.id = articles_categories.categories_ID
+					WHERE articles_categories.articles_ID = #{@id}"
+					).to_a
+				@articles = db.exec(
+					"SELECT articles.id AS article_id, articles.title AS article_title, articles.content AS article_content FROM articles INNER JOIN articles_categories ON articles.id = articles_categories.articles_id WHERE articles_categories.categories_id = #{@id}"
+					).to_a
 				erb :article, :layout => :layout
 			else
     		redirect "/login"
@@ -141,7 +152,8 @@ module WDIWiki
 					ON users.id = articles.author_ID 
 					WHERE articles.id = #{@id}"
 					).first
-				erb :article_edit, :layout => :layout
+				redirect "/articles/#{@id}"
+				# erb :article_edit, :layout => :layout
 			else
     		redirect "/login"
       end
@@ -167,11 +179,31 @@ module WDIWiki
       end
 		end
 
-
-		private
-		def database_connection
-			PG.connect(dbname: WDIWiki)
+		get "/articles_new" do 
+			db = database_connection
+			@categories = db.exec(
+				"SELECT id, title FROM categories"
+				).to_a
+			erb :articles_new
 		end 
+		
+		private
+		# def database_connection
+		# 	PG.connect(dbname: WDIWiki)
+		# end 
+
+		def database_connection
+      if ENV["RACK_ENV"] == 'production'
+        @conn ||= PG.connect(
+           dbname: ENV["POSTGRES_DB"],
+           host: ENV["POSTGRES_HOST"],
+           password: ENV["POSTGRES_PASS"],
+           user: ENV["POSTGRES_USER"]
+         )
+       else
+         @conn ||= PG.connect(dbname: "WDIWiki")
+       end
+     end
 		
 	end 
 	

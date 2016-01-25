@@ -1,3 +1,12 @@
+/*The Big Picture*/
+/*.full {
+  background: url(http://placehold.it/1920x1080) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}*/
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -14,7 +23,7 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #f5f5f5;
+  background-color: #1A1A1A;
 }
 
 

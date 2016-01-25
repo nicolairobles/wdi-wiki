@@ -4,15 +4,20 @@
   <!-- Form to edit Article Content -->
 	<form class="article_edit" action=<%="/articles/#{@id}/edit"%> method="post">
 		<!-- Editable Article content -->
-		<div class="input-row">
-			<label for="content"></label>
-			<textarea name="content"><%= "#{@article["content"]}" %></textarea>
+
+
+
+
+
+		<div class="form-group">
+			<label for="comment">Edit Article (markdown functionality available)</label>
+			<textarea name="content" class="form-control" rows="5" id="comment"><%= "#{@article["content"]}" %></textarea>
 		</div>
 		<!-- Submit edits button -->
 		<div class="input-row">
 			<!-- Method override -->
 		  <input type="hidden" name = "_method" value="PUT">
-			<input class = "#btn-danger" type="submit" value="Submit Edit">
+			<input class="btn btn-ga btn-block" type="submit" value="Submit Edit">
 		</div>
 	</form>
 </div>

@@ -8,10 +8,18 @@
 </div>
 
 <!-- Article Content -->
-<p class="lead"><%= "#{@article["content"]}" %></p>
+<p class="lead"><%= "#{@content}" %></p>
 
 <!-- Categories links -->
-<p><a href=<%= "/articles/#{@id}/edit" %>>Categories</a></p>
+<p>
+	<a href= "/categories">Categories</a>: 
+	<% @categories.each do |category| %>
+	<h6><a class="btn-link" href=<%= "/category/#{category["id"]}" %>><%= category["title"]%></a> </h6>
+	<% end %>
+	<h6><a class="btn-link" href=<%= "/category_new" %>>
+	+ Add New Category
+	</a></h6>
+</p>
 
 <!-- Timestamp -->
 <p>This page was last modified on <%=@time.strftime("%B %d %Y at %I:%M %p")%></p>
