@@ -69,9 +69,12 @@ module WDIWiki
 		get "/categories" do
 			if current_user["id"]
 				db = database_connection
+				@id = current_user["id"]
 				@categories = db.exec(
 					"SELECT id, title FROM categories"
 					).to_a
+				@user_details = db.exec(
+					"SELECT name FROM users WHERE id = #{@id}").first
 				erb :categories, :layout => :layout
     	else
     		redirect "/login"
@@ -97,6 +100,8 @@ module WDIWiki
 				markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
 				db = database_connection
 				@id = params[:id]
+				@user_details = db.exec(
+					"SELECT name FROM users WHERE id = #{current_user["id"]}").first
 				@article = db.exec(
 					"SELECT users.id, users.name, users.email, articles.title, articles.content, articles.edit_date, articles.author_ID 
 					FROM users 
@@ -205,7 +210,7 @@ module WDIWiki
 					FROM categories 
 					WHERE title LIKE '%#{category}%'"
 					).first
-				binding.pry
+				redirect "/categories"
 
 				@article_category = db.exec(
 					"INSERT INTO articles_categories (articles_id, categories_id) 
