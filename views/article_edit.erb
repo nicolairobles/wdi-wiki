@@ -4,13 +4,8 @@
   <!-- Form to edit Article Content -->
 	<form class="article_edit" action=<%="/articles/#{@id}/edit"%> method="post">
 		<!-- Editable Article content -->
-
-
-
-
-
 		<div class="form-group">
-			<label for="comment">Edit Article (markdown functionality available)</label>
+			<label for="comment">Edit Article </label>
 			<textarea name="content" class="form-control" rows="5" id="comment"><%= "#{@article["content"]}" %></textarea>
 		</div>
 		<!-- Submit edits button -->

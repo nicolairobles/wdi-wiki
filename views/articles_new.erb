@@ -1,7 +1,7 @@
 <div class="page-header">
-  <!-- Form to edit Article Content -->
+  <!-- Form to Add New Article -->
 	<h1>Add New Article</h1>
-	<form class="article_edit" action=<%="/articles/#{@id}/edit"%> method="post">
+	<form class="article_edit" action=<%="/articles_new"%> method="post">
 
 <!-- Add Title -->
 		<div class="form-group">
@@ -11,30 +11,17 @@
 		<div class="form-group">
 			<textarea placeholder="Content" name="content" class="form-control" rows="5" id="comment"></textarea>
 <!-- Add Categories -->
-		<div class = "form-group">
-			<li class="dropdown">
-	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Categories<span class="caret"></span></a>
-	      <ul class="dropdown-menu">
-	        <li><a href="/categories">Categories</a></li>
-	        <li><a href=<%="/user/#{current_user["id"]}"%>>Profile</a></li>
-	        <li role="separator" class="divider"></li>
-	        <li class="dropdown-header">
-	          <form name ="supporform" class = "logout" method = "post" action = "/logout">
-	            <input type= "hidden" name = "_method" value="DELETE">
-	            <input type = "submit" class="btn-link" value = "Log Out"></li>
-	          </form>
-	        </li>
-	      </ul>
-	    </li>
+		  <div class="form-group">
+	      <label for="sel2">Category:</label>
+	      <select name="categories" multiple class="form-control" id="sel2">
+	        <%@categories.each do |category|%>
+		        <option><%= category["title"]%></option>
+	        <%end%>
+	      </select>
+	    </div>
 		</div>
-
-
-
-		</div>
-		<!-- Submit edits button -->
+<!-- Submit edits button -->
 		<div class="input-row">
-			<!-- Method override -->
-		  <input type="hidden" name = "_method" value="PUT">
 			<input class="btn btn-ga btn-block" type="submit" value="Submit Edit">
 		</div>
 	</form>

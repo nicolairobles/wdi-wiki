@@ -186,6 +186,37 @@ module WDIWiki
 				).to_a
 			erb :articles_new
 		end 
+
+		post "/articles_new" do
+			if current_user["id"]
+				db = database_connection
+				title = params[:article_title]
+				content = params[:content]
+				author_id = current_user["id"]
+				category = params[:categories]
+				@article = db.exec_params(
+					"INSERT INTO articles (title, content, author_id)
+					VALUES ($1, $2, $3) 
+					RETURNING id", 
+					[title, content, author_id]
+					).first
+				@category = db.exec(
+					"SELECT id 
+					FROM categories 
+					WHERE title LIKE '%#{category}%'"
+					).first
+				binding.pry
+
+				@article_category = db.exec(
+					"INSERT INTO articles_categories (articles_id, categories_id) 
+					VALUES (#{@article["id"]}, #{category["id"]}) RETURNING articles_id")
+				redirect "/category/#{@category["id"]}"
+				binding.pry
+
+			else
+				redirect "/login"
+			end
+		end
 		
 		private
 		# def database_connection
@@ -194,14 +225,14 @@ module WDIWiki
 
 		def database_connection
       if ENV["RACK_ENV"] == 'production'
-        @conn ||= PG.connect(
+        database_connection ||= PG.connect(
            dbname: ENV["POSTGRES_DB"],
            host: ENV["POSTGRES_HOST"],
            password: ENV["POSTGRES_PASS"],
            user: ENV["POSTGRES_USER"]
          )
        else
-         @conn ||= PG.connect(dbname: "WDIWiki")
+         database_connection ||= PG.connect(dbname: "WDIWiki")
        end
      end
 		
