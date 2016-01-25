@@ -212,11 +212,11 @@ module WDIWiki
 					).first
 				redirect "/categories"
 
-				@article_category = db.exec(
-					"INSERT INTO articles_categories (articles_id, categories_id) 
-					VALUES (#{@article["id"]}, #{category["id"]}) RETURNING articles_id")
-				redirect "/category/#{@category["id"]}"
-				binding.pry
+				# @article_category = db.exec(
+				# 	"INSERT INTO articles_categories (articles_id, categories_id) 
+				# 	VALUES (#{@article["id"]}, #{category["id"]}) RETURNING articles_id")
+				# redirect "/category/#{@category["id"]}"
+				# binding.pry
 
 			else
 				redirect "/login"
